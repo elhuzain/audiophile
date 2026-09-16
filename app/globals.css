@@ -3,6 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  --primary: #D87D4A;
+  --primary-light: #fbaf85;
+  --dark: #101010;
+  --light: #F1F1F1;
+  --lighter: #FAFAFA;
 }
 
 @theme inline {
@@ -10,6 +16,12 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-dark: var(--dark);
+  --color-light: var(--light);
+  --color-lighter: var(--lighter);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +34,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: manrope, Helvetica, sans-serif;
 }
