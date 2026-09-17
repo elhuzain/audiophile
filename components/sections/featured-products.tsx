@@ -2,8 +2,12 @@ import Image from "next/image";
 import Button from "../ui/button";
 import MaxWidthContainer from "../max-width-container";
 
-const FeaturedProducts = () => {
-    return <MaxWidthContainer>
+const FeaturedProducts = ({
+    className = ""
+}: {
+    className?: string
+}) => {
+    return <MaxWidthContainer className={className}>
         <section className="w-full space-y-6 sm:space-y-8 xl:space-y-12">
             <article className="relative rounded-lg w-full xl:gap-25 overflow-hidden bg-primary text-white flex flex-col xl:flex-row items-center justify-center py-16">
                 <div className="flex flex-col justify-center items-center">

@@ -33,22 +33,22 @@ const Header = () => {
             <Image src="/shared/desktop/logo.svg" className="mx-auto lg:mx-0 lg:me-auto" alt="Audiophile Logo" width="143" height="25" />
             <ul className="hidden lg:flex items-center gap-8">
                 <li>
-                    <Link href="#">
+                    <Link href="/">
                         <Button className="text-white" variant="ghost">home</Button>
                     </Link>
                 </li>
                 <li>
-                    <Link href="#">
+                    <Link href="/headphones">
                         <Button className="text-white" variant="ghost">headphones</Button>
                     </Link>
                 </li>
                 <li>
-                    <Link href="#">
+                    <Link href="/speakers">
                         <Button className="text-white" variant="ghost">speakers</Button>
                     </Link>
                 </li>
                 <li>
-                    <Link href="#">
+                    <Link href="/earphones">
                         <Button className="text-white" variant="ghost">earphones</Button>
                     </Link>
                 </li>

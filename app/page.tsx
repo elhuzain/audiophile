@@ -9,7 +9,7 @@ export default function Home() {
 
       <Categories className="mt-26 md:mt-40 mb-30 md:mb-24" />
 
-      <FeaturedProducts />
+      <FeaturedProducts className="mb-30 sm:mb-24 xl:mb-50" />
     </main>
   );
 }

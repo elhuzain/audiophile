@@ -4,7 +4,7 @@ import Button from "./ui/button";
 import MaxWidthContainer from "./max-width-container";
 
 const Footer = () => {
-    return <footer className="flex flex-col mt-30 sm:mt-24 xl:mt-50">
+    return <footer className="flex flex-col">
         <MaxWidthContainer>
             <article className="grid grid-cols-1 mx-auto xl:grid-cols-[1fr_1fr] xl:justify-between xl:gap-0 gap-10 mb-30 sm:mb-24 xl:mb-50">
                 <Image src="/shared/mobile/image-best-gear.jpg" className="sm:hidden w-full rounded-lg" alt="Best gear" width="327" height="300" />
@@ -26,16 +26,16 @@ const Footer = () => {
 
                     <ul className="flex flex-col gap-4 text-center sm:text-start sm:flex-row sm:gap-8">
                         <li>
-                            <Link href="#"><Button className="text-white" variant="ghost">home</Button></Link>
+                            <Link href="/"><Button className="text-white" variant="ghost">home</Button></Link>
                         </li>
                         <li>
-                            <Link href="#"><Button className="text-white" variant="ghost">headphones</Button></Link>
+                            <Link href="/headphones"><Button className="text-white" variant="ghost">headphones</Button></Link>
                         </li>
                         <li>
-                            <Link href="#"><Button className="text-white" variant="ghost">speakers</Button></Link>
+                            <Link href="/speakers"><Button className="text-white" variant="ghost">speakers</Button></Link>
                         </li>
                         <li>
-                            <Link href="#"><Button className="text-white" variant="ghost">earphones</Button></Link>
+                            <Link href="/earphones"><Button className="text-white" variant="ghost">earphones</Button></Link>
                         </li>
                     </ul>
                 </div>

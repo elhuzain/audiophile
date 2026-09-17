@@ -42,7 +42,7 @@ export default function Home() {
 
       <CategoryProducts className="mt-30 xl:mt-40" products={products} />
 
-      <Categories  />
+      <Categories className="mt-40 xl:mt-50 mb-30 xl:mb-40"  />
     </main>
   );
 }
