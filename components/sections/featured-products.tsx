@@ -7,14 +7,14 @@ const FeaturedProducts = () => {
         <section className="w-full space-y-6 sm:space-y-8 xl:space-y-12">
             <article className="relative rounded-lg w-full xl:gap-25 overflow-hidden bg-primary text-white flex flex-col xl:flex-row items-center justify-center py-16">
                 <div className="flex flex-col justify-center items-center">
-                    <div className="absolute size-150 -translate-y-35 sm:-translate-y-30 sm:size-180 xl:translate-y-85 xl:size-250 bottom-0 aspect-square">
+                    <div className="absolute size-150 z-0 -translate-y-35 sm:-translate-y-30 sm:size-180 xl:translate-y-85 xl:size-250 bottom-0 aspect-square">
                         <Image src="/home/desktop/pattern-circles.svg" className="object-cover" fill alt="pattern" />
                     </div>
                     <div className="aspect-square -translate-y-5 sm:translate-y-0 relative size-50 xl:size-125 xl:translate-y-20 mb-4 sm:mb-10 xl:mb-0">
                         <Image src="/home/desktop/image-speaker-zx9.png" className="object-contain" fill alt="zx9 speaker" />
                     </div>
                 </div>
-                <div className="text-center xl:text-start">
+                <div className="text-center xl:text-start z-10">
                     <h2 className="text-h2 xl:text-h1 uppercase font-bold mb-4 xl:mb-6">zx9<br />speaker</h2>
                     <p className="max-w-87.5 mb-4 sm:mb-10">Upgrade to premium speakers that are phenomenally built to deliver truly remarkable sound.</p>
                     <Button className="bg-black hover:bg-black/60">see product</Button>
