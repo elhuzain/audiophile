@@ -8,7 +8,7 @@ export const buttonVariants = cva(
             variant: {
                 default: "bg-primary h-12 px-8 tracking-[1px] text-white hover:bg-primary/80",
                 secondary:
-                    "bg-white text-black border tracking-[1px] border-black h-12 px-8 hover:bg-black hover:text-white",
+                    "bg-transparent text-black border tracking-[1px] border-black h-12 px-8 hover:bg-black hover:text-white",
                 ghost:
                     "bg-transparent p-0! h-fit! text-black/50 text-[13px] tracking-[1px] hover:text-primary",
             },
