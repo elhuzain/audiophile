@@ -1,4 +1,3 @@
-import CategoryCard from "@/components/category-card";
 import Categories from "@/components/sections/categories";
 import FeaturedProducts from "@/components/sections/featured-products";
 import Hero from "@/components/sections/hero";
@@ -8,7 +7,7 @@ export default function Home() {
     <main className="w-full flex-1 flex flex-col items-center justify-center mx-auto">
       <Hero />
 
-      <Categories />
+      <Categories className="mt-26 md:mt-40 mb-30 md:mb-24" />
 
       <FeaturedProducts />
     </main>
