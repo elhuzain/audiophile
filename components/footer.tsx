@@ -29,13 +29,13 @@ const Footer = () => {
                             <Link href="/"><Button className="text-white" variant="ghost">home</Button></Link>
                         </li>
                         <li>
-                            <Link href="/headphones"><Button className="text-white" variant="ghost">headphones</Button></Link>
+                            <Link href="/category/headphones"><Button className="text-white" variant="ghost">headphones</Button></Link>
                         </li>
                         <li>
-                            <Link href="/speakers"><Button className="text-white" variant="ghost">speakers</Button></Link>
+                            <Link href="/category/speakers"><Button className="text-white" variant="ghost">speakers</Button></Link>
                         </li>
                         <li>
-                            <Link href="/earphones"><Button className="text-white" variant="ghost">earphones</Button></Link>
+                            <Link href="/category/earphones"><Button className="text-white" variant="ghost">earphones</Button></Link>
                         </li>
                     </ul>
                 </div>

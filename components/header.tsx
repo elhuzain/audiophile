@@ -38,17 +38,17 @@ const Header = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/headphones">
+                    <Link href="/category/headphones">
                         <Button className="text-white" variant="ghost">headphones</Button>
                     </Link>
                 </li>
                 <li>
-                    <Link href="/speakers">
+                    <Link href="/category/speakers">
                         <Button className="text-white" variant="ghost">speakers</Button>
                     </Link>
                 </li>
                 <li>
-                    <Link href="/earphones">
+                    <Link href="/category/earphones">
                         <Button className="text-white" variant="ghost">earphones</Button>
                     </Link>
                 </li>

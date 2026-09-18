@@ -9,9 +9,9 @@ const Categories = ({
 }) => {
     return <MaxWidthContainer className={cn("", className)}>
         <section className="flex flex-col md:flex-row gap-16 md:gap-2.5 xl:gap-7.5">
-            <CategoryCard title="headphones" href="/headphones" />
-            <CategoryCard title="speakers" href="/speakers" />
-            <CategoryCard title="earphones" href="/earphones" />
+            <CategoryCard title="headphones" href="/category/headphones" />
+            <CategoryCard title="speakers" href="/category/speakers" />
+            <CategoryCard title="earphones" href="/category/earphones" />
         </section>
     </MaxWidthContainer>
 }
