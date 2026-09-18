@@ -76,7 +76,7 @@ export default async function Home({ params }: { params: Promise<Record<'categor
 
     return (
         <main className="w-full flex-1 flex flex-col items-center justify-center mx-auto">
-            <CategoryHero />
+            <CategoryHero category={category} />
 
             <CategoryProducts className="mt-30 xl:mt-40" products={selectedProducts} />
 
