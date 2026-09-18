@@ -1,4 +1,4 @@
-import { Product } from "@/app/headphones/page";
+import { Product } from "@/app/category/[category]/page";
 import ProductCard from "../product-card";
 import { cn } from "@/lib/utils";
 

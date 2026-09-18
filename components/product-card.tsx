@@ -9,7 +9,8 @@ const ProductCard = ({
     isReversed = false,
     description,
     image,
-    href
+    href,
+    isNew
 }: {
     title1: string,
     title2: string,
@@ -17,6 +18,7 @@ const ProductCard = ({
     description: string,
     image: string,
     href: string,
+    isNew?: boolean
 }) => {
     const desktopImage = `/${image}/desktop/image-category-page-preview.jpg`;
     const mobileImage = `/${image}/mobile/image-category-page-preview.jpg`;
@@ -31,7 +33,9 @@ const ProductCard = ({
             "flex flex-col items-center justify-center text-center xl:text-start xl:items-start",
             isReversed ? "xl:pe-24" : "xl:ps-24"
         )}>
-                <span className="text-overline uppercase text-primary mb-6">New product</span>
+                {
+                    isNew && <span className="text-overline uppercase text-primary mb-6">New product</span>
+                }
                 <h2 className="text-h2 uppercase mb-6">{title1}<br/>{title2}</h2>
                 <p className="opacity-50 mb-6 max-w-142.5">{description}</p>
                 <Button>See product</Button>

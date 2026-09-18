@@ -10,6 +10,7 @@ export type Product = {
     description: string;
     image: string;
     href: string;
+    isNew?: boolean;
 }
 
 export const products: Record<string, Product[]> = {
@@ -19,7 +20,8 @@ export const products: Record<string, Product[]> = {
             title2: "speaker",
             description: "Upgrade your sound system with the all new ZX9 active speaker. It’s a bookshelf speaker system that offers truly wireless connectivity -- creating new possibilities for more pleasing and practical audio setups.",
             image: "product-zx9-speaker",
-            href: ""
+            href: "",
+            isNew: true
         },
         {
             title1: "zx7",
@@ -35,7 +37,8 @@ export const products: Record<string, Product[]> = {
             title2: "earphones",
             description: "Tailor your listening experience with bespoke dynamic drivers from the new YX1 Wireless Earphones. Enjoy incredible high-fidelity sound even in noisy environments with its active noise cancellation feature.",
             image: "product-yx1-earphones",
-            href: ""
+            href: "",
+            isNew: true
         }
     ],
     headphones: [
@@ -44,7 +47,8 @@ export const products: Record<string, Product[]> = {
             title2: "headphones",
             description: "The new XX99 Mark II headphones is the pinnacle of pristine audio. It redefines your premium headphone experience by reproducing the balanced depth and precision of studio-quality sound.",
             image: "product-xx99-mark-two-headphones",
-            href: ""
+            href: "",
+            isNew: true
         },
         {
             title1: "x99 mark i",
