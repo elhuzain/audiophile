@@ -11,7 +11,7 @@ const ProductCard = ({
   description,
   image,
   isNew,
-  href
+  href,
 }: {
   title1: string;
   title2: string;

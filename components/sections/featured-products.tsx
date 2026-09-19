@@ -37,7 +37,9 @@ const FeaturedProducts = ({ className = "" }: { className?: string }) => {
               truly remarkable sound.
             </p>
             <Link href="/products/zx9-speaker">
-              <Button className="bg-black hover:bg-black/60">see product</Button>
+              <Button className="bg-black hover:bg-black/60">
+                see product
+              </Button>
             </Link>
           </div>
         </article>

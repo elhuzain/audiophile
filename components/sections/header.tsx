@@ -1,6 +1,7 @@
 "use client";
 
 import CartPopup from "../cart-popup";
+import MobileMenu from "../mobile-menu";
 import Image from "next/image";
 import MaxWidthContainer from "./max-width-container";
 import Button from "../ui/button";
@@ -11,6 +12,7 @@ import { cn } from "@/lib/utils";
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 0);
@@ -21,11 +23,22 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!isCartOpen && !isMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isCartOpen, isMenuOpen]);
+
   return (
     <header
       className={cn(
         "fixed top-0 w-full bg-dark z-100 transition-colors",
-        isScrolled ? "bg-dark" : "bg-transparent",
+        isScrolled || isCartOpen || isMenuOpen ? "bg-dark" : "bg-transparent",
       )}
     >
       <MaxWidthContainer
@@ -34,13 +47,24 @@ const Header = () => {
           isScrolled ? "py-3 xl:py-4" : "py-6 xl:py-9",
         )}
       >
-        <Button className="lg:hidden" variant="ghost">
+        <Button
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-navigation"
+          aria-label="Open navigation menu"
+          className="lg:hidden"
+          onClick={() => {
+            setIsCartOpen(false);
+            setIsMenuOpen((isOpen) => !isOpen);
+          }}
+          type="button"
+          variant="ghost"
+        >
           <Image
             src="/shared/tablet/icon-hamburger.svg"
             className="me-auto"
             width="24"
             height="24"
-            alt="Hamburger menu"
+            alt=""
           />
         </Button>
         <Image
@@ -85,7 +109,10 @@ const Header = () => {
           aria-haspopup="dialog"
           aria-label="Open cart"
           className="ms-auto"
-          onClick={() => setIsCartOpen((isOpen) => !isOpen)}
+          onClick={() => {
+            setIsMenuOpen(false);
+            setIsCartOpen((isOpen) => !isOpen);
+          }}
           type="button"
         >
           <Image
@@ -96,6 +123,7 @@ const Header = () => {
           />
         </button>
       </MaxWidthContainer>
+      {isMenuOpen && <MobileMenu onClose={() => setIsMenuOpen(false)} />}
       {isCartOpen && <CartPopup onClose={() => setIsCartOpen(false)} />}
     </header>
   );
