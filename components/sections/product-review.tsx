@@ -2,6 +2,7 @@
 import Link from "next/link";
 import MaxWidthContainer from "./max-width-container";
 import Image from "next/image";
+import { getCart, setCart } from "@/lib/cart";
 import { DetailedProduct } from "@/lib/data";
 import Button from "../ui/button";
 import { useState } from "react";
@@ -15,6 +16,35 @@ const ProductReview = ({ product }: { product: DetailedProduct }) => {
 
   const decrement = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
+  };
+
+  const addToCart = () => {
+    const cart = getCart();
+    const existingItem = cart.find((item) => item.id === product.id);
+
+    if (existingItem) {
+      setCart(
+        cart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item,
+        ),
+      );
+    } else {
+      setCart([
+        ...cart,
+        {
+          id: product.id,
+          slug: product.slug,
+          name: product.name,
+          price: product.price,
+          image: `/cart/image-${product.slug}.jpg`,
+          quantity,
+        },
+      ]);
+    }
+
+    setQuantity(1);
   };
 
   return (
@@ -75,6 +105,7 @@ const ProductReview = ({ product }: { product: DetailedProduct }) => {
               <div className="flex gap-4 items-center">
                 <div className="grid grid-cols-3 w-30 h-12 bg-light">
                   <button
+                    type="button"
                     onClick={decrement}
                     className="text-center w-full h-full flex items-center justify-center opacity-50 hover:text-primary hover:opacity-100"
                   >
@@ -84,13 +115,16 @@ const ProductReview = ({ product }: { product: DetailedProduct }) => {
                     {quantity}
                   </span>
                   <button
+                    type="button"
                     onClick={increment}
                     className="text-center w-full h-full flex items-center justify-center opacity-50 hover:text-primary hover:opacity-100"
                   >
                     +
                   </button>
                 </div>
-                <Button>Add to cart</Button>
+                <Button type="button" onClick={addToCart}>
+                  Add to cart
+                </Button>
               </div>
             </div>
           </div>

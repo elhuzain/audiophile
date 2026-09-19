@@ -20,17 +20,18 @@ export const buttonVariants = cva(
   },
 );
 
+type ButtonProps = React.ComponentProps<"button"> & {
+  variant?: "default" | "secondary" | "ghost";
+};
+
 const Button = ({
   children,
   className,
   variant = "default",
-}: {
-  children: React.ReactNode;
-  className?: string;
-  variant?: "default" | "secondary" | "ghost";
-}) => {
+  ...props
+}: ButtonProps) => {
   return (
-    <button className={cn(buttonVariants({ variant, className }))}>
+    <button className={cn(buttonVariants({ variant, className }))} {...props}>
       {children}
     </button>
   );
