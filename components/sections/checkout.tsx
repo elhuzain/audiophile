@@ -16,59 +16,181 @@ import {
 import { cn } from "@/lib/utils";
 import MaxWidthContainer from "./max-width-container";
 
-const fields = {
+type Field = {
+  autoComplete: string;
+  className?: string;
+  fullWidth?: boolean;
+  inputMode?: React.ComponentProps<"input">["inputMode"];
+  label: string;
+  maxLength?: number;
+  minLength?: number;
+  name: string;
+  pattern?: string;
+  patternMessage?: string;
+  placeholder: string;
+  type?: React.HTMLInputTypeAttribute;
+};
+
+const fields: { billing: Field[]; shipping: Field[]; payment: Field[] } = {
   billing: [
-    { label: "Name", name: "name", placeholder: "Alexei Ward", type: "text" },
     {
+      autoComplete: "name",
+      label: "Name",
+      maxLength: 50,
+      minLength: 2,
+      name: "name",
+      placeholder: "Alexei Ward",
+      type: "text",
+    },
+    {
+      autoComplete: "email",
       label: "Email Address",
+      maxLength: 100,
       name: "email",
       placeholder: "alexei@mail.com",
       type: "email",
     },
     {
+      autoComplete: "tel",
+      inputMode: "tel",
       label: "Phone Number",
+      maxLength: 20,
       name: "phone",
+      pattern: "^\\+?[0-9 ()-]{7,20}$",
+      patternMessage:
+        "Enter a valid phone number using 7 to 20 digits and standard separators.",
       placeholder: "+1 202-555-0136",
       type: "tel",
     },
   ],
   shipping: [
     {
+      autoComplete: "street-address",
+      fullWidth: true,
       label: "Your Address",
+      maxLength: 100,
+      minLength: 5,
       name: "address",
       placeholder: "1137 Williams Avenue",
       type: "text",
-      fullWidth: true,
     },
-    { label: "ZIP Code", name: "zip", placeholder: "10001", type: "text" },
-    { label: "City", name: "city", placeholder: "New York", type: "text" },
     {
+      autoComplete: "postal-code",
+      inputMode: "numeric",
+      label: "ZIP Code",
+      maxLength: 10,
+      name: "zip",
+      pattern: "^[0-9]{5}(-[0-9]{4})?$",
+      patternMessage: "Enter a valid ZIP code, such as 10001 or 10001-1234.",
+      placeholder: "10001",
+      type: "text",
+    },
+    {
+      autoComplete: "address-level2",
+      label: "City",
+      maxLength: 50,
+      minLength: 2,
+      name: "city",
+      placeholder: "New York",
+      type: "text",
+    },
+    {
+      autoComplete: "country-name",
       label: "Country",
+      maxLength: 56,
+      minLength: 2,
       name: "country",
       placeholder: "United States",
       type: "text",
     },
   ],
+  payment: [
+    {
+      autoComplete: "off",
+      className: "mt-4",
+      inputMode: "numeric",
+      label: "e-Money Number",
+      maxLength: 9,
+      name: "e-money-number",
+      pattern: "^[0-9]{9}$",
+      patternMessage: "Enter the 9-digit e-Money number.",
+      placeholder: "238521993",
+      type: "text",
+    },
+    {
+      autoComplete: "off",
+      className: "mt-4",
+      inputMode: "numeric",
+      label: "e-Money PIN",
+      maxLength: 4,
+      name: "e-money-pin",
+      pattern: "^[0-9]{4}$",
+      patternMessage: "Enter the 4-digit e-Money PIN.",
+      placeholder: "6891",
+      type: "text",
+    },
+  ],
 };
 
-type Field = (typeof fields.billing)[number] & { fullWidth?: boolean };
+const getFieldError = (input: HTMLInputElement, field: Field) => {
+  if (input.validity.valueMissing) return `${field.label} is required.`;
+  if (input.validity.typeMismatch)
+    return `Enter a valid ${field.label.toLowerCase()}.`;
+  if (input.validity.tooShort)
+    return `${field.label} must be at least ${field.minLength} characters.`;
+  if (input.validity.patternMismatch)
+    return (
+      field.patternMessage ?? `Enter a valid ${field.label.toLowerCase()}.`
+    );
+  return "";
+};
 
-const CheckoutField = ({ field }: { field: Field }) => (
-  <label
-    className={cn("block", field.fullWidth && "sm:col-span-2")}
-    htmlFor={field.name}
-  >
-    <span className="mb-2 block text-xs font-bold">{field.label}</span>
-    <Input
-      autoComplete={field.name}
-      id={field.name}
-      name={field.name}
-      placeholder={field.placeholder}
-      required
-      type={field.type}
-    />
-  </label>
-);
+const CheckoutField = ({ field }: { field: Field }) => {
+  const [error, setError] = useState("");
+  const errorId = `${field.name}-error`;
+
+  return (
+    <label
+      className={cn(
+        "block",
+        field.fullWidth && "sm:col-span-2",
+        field.className,
+      )}
+      htmlFor={field.name}
+    >
+      <span className="mb-2 block text-xs font-bold">{field.label}</span>
+      <Input
+        aria-describedby={error ? errorId : undefined}
+        aria-invalid={error ? true : undefined}
+        autoComplete={field.autoComplete}
+        id={field.name}
+        inputMode={field.inputMode}
+        maxLength={field.maxLength}
+        minLength={field.minLength}
+        name={field.name}
+        onInput={(event) => {
+          if (error) setError(getFieldError(event.currentTarget, field));
+        }}
+        onInvalid={(event) => {
+          setError(getFieldError(event.currentTarget, field));
+        }}
+        pattern={field.pattern}
+        placeholder={field.placeholder}
+        required
+        type={field.type}
+      />
+      {error && (
+        <span
+          className="mt-1.5 block text-xs font-medium text-red-600"
+          id={errorId}
+          role="alert"
+        >
+          {error}
+        </span>
+      )}
+    </label>
+  );
+};
 
 const SectionHeading = ({ children }: { children: React.ReactNode }) => (
   <h2 className="mb-4 text-subtitle uppercase text-primary">{children}</h2>
@@ -166,30 +288,9 @@ const Checkout = () => {
 
                 {paymentMethod === "e-money" && (
                   <div className="contents">
-                    <label className="mt-4 block" htmlFor="e-money-number">
-                      <span className="mb-2 block text-xs font-bold">
-                        e-Money Number
-                      </span>
-                      <Input
-                        id="e-money-number"
-                        inputMode="numeric"
-                        name="eMoneyNumber"
-                        placeholder="238521993"
-                        required
-                      />
-                    </label>
-                    <label className="mt-4 block" htmlFor="e-money-pin">
-                      <span className="mb-2 block text-xs font-bold">
-                        e-Money PIN
-                      </span>
-                      <Input
-                        id="e-money-pin"
-                        inputMode="numeric"
-                        name="eMoneyPin"
-                        placeholder="6891"
-                        required
-                      />
-                    </label>
+                    {fields.payment.map((field) => (
+                      <CheckoutField field={field} key={field.name} />
+                    ))}
                   </div>
                 )}
               </div>
