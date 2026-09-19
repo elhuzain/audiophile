@@ -67,13 +67,15 @@ const Header = () => {
             alt=""
           />
         </Button>
-        <Image
-          src="/shared/desktop/logo.svg"
-          className="mx-auto lg:mx-0 lg:me-auto"
-          alt="Audiophile Logo"
-          width="143"
-          height="25"
-        />
+        <Link href="/">
+          <Image
+            src="/shared/desktop/logo.svg"
+            className="mx-auto lg:mx-0 lg:me-auto"
+            alt="Audiophile Logo"
+            width="143"
+            height="25"
+          />
+        </Link>
         <ul className="hidden lg:flex items-center gap-8">
           <li>
             <Link href="/">
