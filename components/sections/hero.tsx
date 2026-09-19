@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Button from "../ui/button";
 import MaxWidthContainer from "./max-width-container";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -19,7 +20,9 @@ const Hero = () => {
             Experience natural, lifelike audio and exceptional build quality
             made for the passionate music enthusiast.
           </p>
-          <Button>See product</Button>
+          <Link href="/products/xx99-mark-two-headphones">
+            <Button>See product</Button>
+          </Link>
         </div>
         <Image
           alt="hero"

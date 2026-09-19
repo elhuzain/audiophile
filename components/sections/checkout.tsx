@@ -71,7 +71,7 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("e-money");
 
   return (
-    <main className="flex-1 bg-[#f2f2f2] pb-24 pt-24 sm:pb-28 sm:pt-32 lg:pb-36 lg:pt-38">
+    <main className="flex-1 bg-light pb-24 pt-24 sm:pb-28 sm:pt-32 lg:pb-36 lg:pt-38">
            <div className="h-19 xl:h-25 flex w-full bg-dark absolute top-0" />
 
       <MaxWidthContainer>
