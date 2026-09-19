@@ -1,19 +1,17 @@
 import { cn } from "@/lib/utils";
 import CategoryCard from "../category-card";
-import MaxWidthContainer from "../max-width-container"
+import MaxWidthContainer from "./max-width-container";
 
-const Categories = ({
-    className = ""
-}: {
-    className?: string
-}) => {
-    return <MaxWidthContainer className={cn("", className)}>
-        <section className="flex flex-col md:flex-row gap-16 md:gap-2.5 xl:gap-7.5">
-            <CategoryCard title="headphones" href="/category/headphones" />
-            <CategoryCard title="speakers" href="/category/speakers" />
-            <CategoryCard title="earphones" href="/category/earphones" />
-        </section>
+const Categories = ({ className = "" }: { className?: string }) => {
+  return (
+    <MaxWidthContainer className={cn("", className)}>
+      <section className="flex flex-col md:flex-row gap-16 md:gap-2.5 xl:gap-7.5">
+        <CategoryCard title="headphones" href="/category/headphones" />
+        <CategoryCard title="speakers" href="/category/speakers" />
+        <CategoryCard title="earphones" href="/category/earphones" />
+      </section>
     </MaxWidthContainer>
-}
+  );
+};
 
 export default Categories;

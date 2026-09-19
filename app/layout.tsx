@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
+import Footer from "@/components/sections/footer";
+import Header from "@/components/sections/header";
 
 const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
-  weight: ['400', "500", "600", "700"]
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -17,14 +17,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${manrope.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${manrope.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <Header/>
+        <Header />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
