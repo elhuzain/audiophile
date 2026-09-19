@@ -64,8 +64,6 @@ Describe how you used AI tools (if any) during this project. This helps demonstr
 - How did you use them (e.g., debugging, generating boilerplate, brainstorming solutions)?
 - What worked well? What didn't?
 
-**Note: Delete this note and the content above if you didn't use AI, or replace with your own experience.**
-
 Codex Sol 5.6 was used to assist with the project structure and overall refactoring of the project when needed. Ocassionally, I notice I place my components in the wrong hierarichy. I use AI to quickly move them back where they should be. I also used AI to write commit messages.
 
 ## Author
