@@ -6,13 +6,14 @@ import Image from "next/image";
 import MaxWidthContainer from "./max-width-container";
 import Button, { buttonVariants } from "../ui/button";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const closeCart = useCallback(() => setIsCartOpen(false), []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 0);
@@ -142,7 +143,7 @@ const Header = () => {
         </button>
       </MaxWidthContainer>
       {isMenuOpen && <MobileMenu onClose={() => setIsMenuOpen(false)} />}
-      {isCartOpen && <CartPopup onClose={() => setIsCartOpen(false)} />}
+      {isCartOpen && <CartPopup onClose={closeCart} />}
     </header>
   );
 };

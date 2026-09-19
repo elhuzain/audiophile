@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CartItem, getCart, setCart } from "@/lib/cart";
 import Button from "./ui/button";
 
@@ -18,16 +18,66 @@ type CartPopupProps = {
 
 const CartPopup = ({ onClose }: CartPopupProps) => {
   const router = useRouter();
+  const dialogRef = useRef<HTMLDivElement>(null);
   const [cart, setCartState] = useState<CartItem[]>(getCart);
 
   useEffect(() => {
+    const dialog = dialogRef.current;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+
+    dialog?.focus();
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab" || !dialog) return;
+
+      const focusableElements = Array.from(
+        dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((element) => !element.hasAttribute("hidden"));
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        dialog.focus();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+      const focusIsOutside = !activeElement || !dialog.contains(activeElement);
+
+      if (event.shiftKey) {
+        if (
+          activeElement === firstElement ||
+          activeElement === dialog ||
+          focusIsOutside
+        ) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+      } else if (
+        activeElement === lastElement ||
+        activeElement === dialog ||
+        focusIsOutside
+      ) {
+        event.preventDefault();
+        firstElement.focus();
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      if (previouslyFocused?.isConnected) previouslyFocused.focus();
+    };
   }, [onClose]);
 
   const updateCart = (nextCart: CartItem[]) => {
@@ -64,8 +114,10 @@ const CartPopup = ({ onClose }: CartPopupProps) => {
       <div
         aria-labelledby="cart-title"
         aria-modal="true"
-        className="max-w-270 mx-auto"
+        className="max-w-270 mx-auto outline-none"
+        ref={dialogRef}
         role="dialog"
+        tabIndex={-1}
       >
         <div className="ms-auto max-h-[calc(100dvh-7rem)] w-full max-w-94 overflow-y-auto rounded-lg bg-white p-6 text-black sm:p-8">
           <div className="mb-8 flex items-center justify-between">
