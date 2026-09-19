@@ -1,5 +1,6 @@
 "use client";
 
+import CartPopup from "../cart-popup";
 import Image from "next/image";
 import MaxWidthContainer from "./max-width-container";
 import Button from "../ui/button";
@@ -9,6 +10,7 @@ import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 0);
@@ -28,7 +30,7 @@ const Header = () => {
     >
       <MaxWidthContainer
         className={cn(
-          "grid grid-cols-3 border-b h-full border-b-light/20 transition-[padding] duration-200",
+          "relative z-20 grid grid-cols-3 border-b h-full border-b-light/20 transition-[padding] duration-200",
           isScrolled ? "py-3 xl:py-4" : "py-6 xl:py-9",
         )}
       >
@@ -78,15 +80,23 @@ const Header = () => {
             </Link>
           </li>
         </ul>
-        <Link className="ms-auto" href="">
+        <button
+          aria-expanded={isCartOpen}
+          aria-haspopup="dialog"
+          aria-label="Open cart"
+          className="ms-auto"
+          onClick={() => setIsCartOpen((isOpen) => !isOpen)}
+          type="button"
+        >
           <Image
             src="/shared/desktop/icon-cart.svg"
             width="24"
             height="24"
-            alt="Hamburger menu"
+            alt=""
           />
-        </Link>
+        </button>
       </MaxWidthContainer>
+      {isCartOpen && <CartPopup onClose={() => setIsCartOpen(false)} />}
     </header>
   );
 };
