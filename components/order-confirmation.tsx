@@ -27,6 +27,7 @@ type OrderConfirmationProps = {
 
 const OrderConfirmation = ({ onBackHome, order }: OrderConfirmationProps) => {
   const actionRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLElement>(null);
   const firstItem = order[0];
   const otherItemCount = order.length - 1;
   const total = order.reduce(
@@ -36,12 +37,58 @@ const OrderConfirmation = ({ onBackHome, order }: OrderConfirmationProps) => {
   const grandTotal = total + SHIPPING_COST;
 
   useEffect(() => {
+    const dialog = dialogRef.current;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
     const previousOverflow = document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
     actionRef.current?.focus();
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Tab" || !dialog) return;
+
+      const focusableElements = Array.from(
+        dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((element) => !element.hasAttribute("hidden"));
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        dialog.focus();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+      const focusIsOutside = !activeElement || !dialog.contains(activeElement);
+
+      if (event.shiftKey) {
+        if (
+          activeElement === firstElement ||
+          activeElement === dialog ||
+          focusIsOutside
+        ) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+      } else if (
+        activeElement === lastElement ||
+        activeElement === dialog ||
+        focusIsOutside
+      ) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
+      window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = previousOverflow;
+      if (previouslyFocused?.isConnected) previouslyFocused.focus();
     };
   }, []);
 
@@ -50,10 +97,13 @@ const OrderConfirmation = ({ onBackHome, order }: OrderConfirmationProps) => {
   return (
     <div className="fixed inset-0 z-200 flex items-center justify-center overflow-y-auto bg-black/40 p-6 sm:p-10">
       <section
+        aria-describedby="order-confirmation-description"
         aria-labelledby="order-confirmation-title"
         aria-modal="true"
-        className="my-auto w-full max-w-135 rounded-lg bg-white p-8 text-black sm:p-12"
+        className="my-auto w-full max-w-135 rounded-lg bg-white p-8 text-black outline-none sm:p-12"
+        ref={dialogRef}
         role="dialog"
+        tabIndex={-1}
       >
         <Image
           alt=""
@@ -71,7 +121,10 @@ const OrderConfirmation = ({ onBackHome, order }: OrderConfirmationProps) => {
           <br />
           for your order
         </h2>
-        <p className="mb-6 font-medium text-black/50 sm:mb-8">
+        <p
+          className="mb-6 font-medium text-black/50 sm:mb-8"
+          id="order-confirmation-description"
+        >
           You will receive an email confirmation shortly.
         </p>
 
