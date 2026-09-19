@@ -3,77 +3,9 @@ import CategoryHero from "@/components/sections/category-hero";
 import FourOFour from "@/components/sections/404";
 import Categories from "@/components/sections/categories";
 import CategoryProducts from "@/components/sections/category-products";
+import { getProductsByCategory, type ProductCategory } from "@/lib/data";
 
-export type Product = {
-  title1: string;
-  title2: string;
-  description: string;
-  image: string;
-  href: string;
-  isNew?: boolean;
-};
-
-export const products: Record<string, Product[]> = {
-  speakers: [
-    {
-      title1: "zx9",
-      title2: "speaker",
-      description:
-        "Upgrade your sound system with the all new ZX9 active speaker. It’s a bookshelf speaker system that offers truly wireless connectivity -- creating new possibilities for more pleasing and practical audio setups.",
-      image: "product-zx9-speaker",
-      href: "/products/zx9-speaker",
-      isNew: true,
-    },
-    {
-      title1: "zx7",
-      title2: "speaker",
-      description:
-        "Stream high quality sound wirelessly with minimal loss. The ZX7 bookshelf speaker uses high-end audiophile components that represents the top of the line powered speakers for home or studio use.",
-      image: "product-zx7-speaker",
-      href: "/products/zx7-speaker",
-    },
-  ],
-  earphones: [
-    {
-      title1: "yx1 wireless",
-      title2: "earphones",
-      description:
-        "Tailor your listening experience with bespoke dynamic drivers from the new YX1 Wireless Earphones. Enjoy incredible high-fidelity sound even in noisy environments with its active noise cancellation feature.",
-      image: "product-yx1-earphones",
-      href: "/products/yx1-earphones",
-      isNew: true,
-    },
-  ],
-  headphones: [
-    {
-      title1: "x99 mark ii",
-      title2: "headphones",
-      description:
-        "The new XX99 Mark II headphones is the pinnacle of pristine audio. It redefines your premium headphone experience by reproducing the balanced depth and precision of studio-quality sound.",
-      image: "product-xx99-mark-two-headphones",
-      href: "/products/xx99-mark-two-headphones",
-      isNew: true,
-    },
-    {
-      title1: "x99 mark i",
-      title2: "headphones",
-      description:
-        "As the gold standard for headphones, the classic XX99 Mark I offers detailed and accurate audio reproduction for audiophiles, mixing engineers, and music aficionados alike in studios and on the go.",
-      image: "product-xx99-mark-one-headphones",
-      href: "/products/xx99-mark-one-headphones",
-    },
-    {
-      title1: "XX59",
-      title2: "Headphones",
-      description:
-        "Enjoy your audio almost anywhere and customize it to your specific tastes with the XX59 headphones. The stylish yet durable versatile wireless headset is a brilliant companion at home or on the move.",
-      image: "product-xx59-headphones",
-      href: "/products/xx59-headphones",
-    },
-  ],
-};
-
-const categoryDescriptions: Record<string, string> = {
+const categoryDescriptions: Record<ProductCategory, string> = {
   headphones:
     "Explore Audiophile premium headphones, designed for detailed, immersive listening at home, in the studio, or on the move.",
   speakers:
@@ -81,6 +13,9 @@ const categoryDescriptions: Record<string, string> = {
   earphones:
     "Shop Audiophile wireless earphones combining high-fidelity sound, comfort, and effortless everyday portability.",
 };
+
+const isProductCategory = (category: string): category is ProductCategory =>
+  category in categoryDescriptions;
 
 const formatCategoryName = (category: string) =>
   category.charAt(0).toUpperCase() + category.slice(1);
@@ -91,9 +26,8 @@ export async function generateMetadata({
   params: Promise<Record<"category", string>>;
 }): Promise<Metadata> {
   const { category } = await params;
-  const categoryProducts = products[category];
 
-  if (!categoryProducts) {
+  if (!isProductCategory(category)) {
     return {
       title: "Page Not Found",
       robots: { index: false, follow: false },
@@ -121,20 +55,16 @@ export async function generateMetadata({
   };
 }
 
-export default async function Home({
+export default async function CategoryPage({
   params,
 }: {
   params: Promise<Record<"category", string>>;
 }) {
-  const urlParams = await params;
+  const { category } = await params;
 
-  const { category } = urlParams;
+  if (!isProductCategory(category)) return <FourOFour />;
 
-  if (!category) return <FourOFour />;
-
-  const selectedProducts = products[category];
-
-  if (!selectedProducts) return <FourOFour />;
+  const selectedProducts = getProductsByCategory(category);
 
   return (
     <main className="w-full flex-1 flex flex-col items-center justify-center mx-auto">

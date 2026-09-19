@@ -1,54 +1,45 @@
 import Image from "next/image";
+import Link from "next/link";
+import type { DetailedProduct } from "@/lib/data";
+import { cn } from "@/lib/utils";
 import MaxWidthContainer from "./sections/max-width-container";
 import { buttonVariants } from "./ui/button";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
 
-const ProductCard = ({
-  title1,
-  title2,
-  isReversed = false,
-  description,
-  image,
-  isNew,
-  href,
-}: {
-  title1: string;
-  title2: string;
+type ProductCardProps = {
   isReversed?: boolean;
-  description: string;
-  image: string;
-  isNew?: boolean;
-  href: string;
-}) => {
-  const desktopImage = `/${image}/desktop/image-category-page-preview.jpg`;
-  const mobileImage = `/${image}/mobile/image-category-page-preview.jpg`;
-  const tabletImage = `/${image}/tablet/image-category-page-preview.jpg`;
+  product: DetailedProduct;
+};
+
+const ProductCard = ({ product, isReversed = false }: ProductCardProps) => {
+  const productName = product.name.replace(
+    new RegExp(` ${product.category}$`, "i"),
+    "",
+  );
 
   return (
     <MaxWidthContainer>
       <article className="grid xl:grid-cols-2 gap-8 xl:gap-0">
         <Image
-          alt={title1 + " " + title2}
+          alt={product.name}
           className="w-full rounded-lg sm:hidden"
-          src={mobileImage}
+          src={product.categoryImage.mobile}
           width="327"
           height="352"
         />
         <Image
-          alt={title1 + " " + title2}
+          alt={product.name}
           className="w-full rounded-lg hidden sm:block xl:hidden"
-          src={tabletImage}
+          src={product.categoryImage.tablet}
           width="800"
           height="440"
         />
         <Image
-          alt={title1 + " " + title2}
+          alt={product.name}
           className={cn(
             "w-full rounded-lg hidden xl:block",
             isReversed && "sm:order-1",
           )}
-          src={desktopImage}
+          src={product.categoryImage.desktop}
           width="560"
           height="560"
         />
@@ -58,20 +49,20 @@ const ProductCard = ({
             isReversed ? "xl:pe-24" : "xl:ps-24",
           )}
         >
-          {isNew && (
+          {product.isNew && (
             <span className="text-overline uppercase text-primary mb-6">
               New product
             </span>
           )}
           <h2 className="text-h2 uppercase mb-6">
-            {title1}
+            {productName}
             <br />
-            {title2}
+            {product.category}
           </h2>
           <p className="opacity-50 font-medium mb-6 max-w-142.5">
-            {description}
+            {product.description}
           </p>
-          <Link className={buttonVariants()} href={href}>
+          <Link className={buttonVariants()} href={"/products/" + product.slug}>
             See product
           </Link>
         </div>

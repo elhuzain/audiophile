@@ -1,3 +1,5 @@
+export type ProductCategory = "headphones" | "speakers" | "earphones";
+
 export type DetailedProduct = {
   id: number;
   slug: string;
@@ -7,7 +9,7 @@ export type DetailedProduct = {
     tablet: string;
     desktop: string;
   };
-  category: string;
+  category: ProductCategory;
   categoryImage: {
     mobile: string;
     tablet: string;
@@ -596,5 +598,15 @@ const products: DetailedProduct[] = [
     ],
   },
 ];
+
+export const getProductsByCategory = (
+  category: ProductCategory,
+): DetailedProduct[] =>
+  products
+    .filter((product) => product.category === category)
+    .sort((first, second) => {
+      const newProductOrder = Number(second.isNew) - Number(first.isNew);
+      return newProductOrder || second.id - first.id;
+    });
 
 export default products;
