@@ -19,6 +19,15 @@ const item: CartItem = {
   quantity: 1,
 };
 
+const secondItem: CartItem = {
+  id: 2,
+  slug: "xx59-headphones",
+  name: "XX59 Headphones",
+  price: 899,
+  image: "/cart/image-xx59-headphones.jpg",
+  quantity: 1,
+};
+
 const CartHarness = () => {
   const [open, setOpen] = useState(false);
 
@@ -75,6 +84,46 @@ describe("CartPopup", () => {
     await user.click(screen.getByRole("button", { name: "Remove all" }));
     expect(getCart()).toEqual([]);
     expect(screen.getByText("Your cart is empty.")).toBeInTheDocument();
+  });
+
+  it("decreases an item's quantity and persists the change", async () => {
+    const user = userEvent.setup();
+    setCart([{ ...item, quantity: 2 }]);
+    render(<CartHarness />);
+
+    await user.click(screen.getByRole("button", { name: "Open cart" }));
+    await user.click(
+      screen.getByRole("button", {
+        name: "Decrease XX99 Mark II Headphones quantity",
+      }),
+    );
+
+    expect(getCart()).toEqual([{ ...item, quantity: 1 }]);
+    expect(screen.getByText("1")).toBeInTheDocument();
+    expect(screen.getAllByText("$2,999")).toHaveLength(2);
+  });
+
+  it("removes only the selected product when decreasing its last unit", async () => {
+    const user = userEvent.setup();
+    setCart([item, secondItem]);
+    render(<CartHarness />);
+
+    await user.click(screen.getByRole("button", { name: "Open cart" }));
+    await user.click(
+      screen.getByRole("button", {
+        name: "Decrease XX99 Mark II Headphones quantity",
+      }),
+    );
+
+    expect(getCart()).toEqual([secondItem]);
+    expect(
+      screen.queryByText("XX99 Mark II Headphones"),
+    ).not.toBeInTheDocument();
+    expect(screen.getByText("XX59 Headphones")).toBeInTheDocument();
+    expect(
+      screen.getByRole("dialog", { name: "Cart (1)" }),
+    ).toBeInTheDocument();
+    expect(screen.getAllByText("$899")).toHaveLength(2);
   });
 
   it("closes and navigates to checkout", async () => {

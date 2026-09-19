@@ -87,11 +87,13 @@ const CartPopup = ({ onClose }: CartPopupProps) => {
 
   const updateQuantity = (id: number, adjustment: number) => {
     updateCart(
-      cart.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + adjustment) }
-          : item,
-      ),
+      cart
+        .map((item) =>
+          item.id === id
+            ? { ...item, quantity: item.quantity + adjustment }
+            : item,
+        )
+        .filter((item) => item.quantity > 0),
     );
   };
 
