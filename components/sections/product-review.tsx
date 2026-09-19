@@ -109,16 +109,25 @@ const ProductReview = ({ product }: { product: DetailedProduct }) => {
               <div className="flex gap-4 items-center">
                 <div className="grid grid-cols-3 w-30 h-12 bg-light">
                   <button
+                    aria-controls="product-quantity"
+                    aria-label="Decrease quantity"
                     type="button"
                     onClick={decrement}
                     className="text-center w-full h-full flex items-center justify-center opacity-50 hover:text-primary hover:opacity-100"
                   >
                     -
                   </button>
-                  <span className="text-center flex items-center justify-center">
+                  <output
+                    aria-label="Current quantity"
+                    aria-live="polite"
+                    className="text-center flex items-center justify-center"
+                    id="product-quantity"
+                  >
                     {quantity}
-                  </span>
+                  </output>
                   <button
+                    aria-controls="product-quantity"
+                    aria-label="Increase quantity"
                     type="button"
                     onClick={increment}
                     className="text-center w-full h-full flex items-center justify-center opacity-50 hover:text-primary hover:opacity-100"
