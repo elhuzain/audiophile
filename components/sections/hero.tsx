@@ -16,7 +16,7 @@ const Hero = () => {
             <br />
             headphones
           </h1>
-          <p className="opacity-50 mx-auto xl:mx-0 mb-10 max-w-77.5 sm:max-w-92">
+          <p className="opacity-50 font-medium mx-auto xl:mx-0 mb-10 max-w-77.5 sm:max-w-92">
             Experience natural, lifelike audio and exceptional build quality
             made for the passionate music enthusiast.
           </p>

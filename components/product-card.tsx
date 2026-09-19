@@ -68,7 +68,7 @@ const ProductCard = ({
             <br />
             {title2}
           </h2>
-          <p className="opacity-50 mb-6 max-w-142.5">{description}</p>
+          <p className="opacity-50 font-medium mb-6 max-w-142.5">{description}</p>
           <Link href={href}>
             <Button>See product</Button>
           </Link>

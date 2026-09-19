@@ -51,7 +51,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <p className="opacity-50 text-center sm:text-start max-w-135">
+          <p className="opacity-50 font-medium text-center sm:text-start max-w-135">
             Audiophile is an all in one stop to fulfill your audio needs.
             We&apos;re a small team of music lovers and sound specialists who
             are devoted to helping you get the most out of personal audio. Come
