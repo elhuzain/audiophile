@@ -1,6 +1,6 @@
 import Image from "next/image";
 import MaxWidthContainer from "./sections/max-width-container";
-import Button from "./ui/button";
+import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -68,9 +68,11 @@ const ProductCard = ({
             <br />
             {title2}
           </h2>
-          <p className="opacity-50 font-medium mb-6 max-w-142.5">{description}</p>
-          <Link href={href}>
-            <Button>See product</Button>
+          <p className="opacity-50 font-medium mb-6 max-w-142.5">
+            {description}
+          </p>
+          <Link className={buttonVariants()} href={href}>
+            See product
           </Link>
         </div>
       </article>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import Button from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import MaxWidthContainer from "./max-width-container";
 
 const Footer = () => {
@@ -21,31 +21,47 @@ const Footer = () => {
 
             <ul className="flex flex-col gap-4 text-center sm:text-start sm:flex-row sm:gap-8">
               <li>
-                <Link href="/">
-                  <Button className="text-white" variant="ghost">
-                    home
-                  </Button>
+                <Link
+                  className={buttonVariants({
+                    variant: "ghost",
+                    className: "text-white",
+                  })}
+                  href="/"
+                >
+                  home
                 </Link>
               </li>
               <li>
-                <Link href="/category/headphones">
-                  <Button className="text-white" variant="ghost">
-                    headphones
-                  </Button>
+                <Link
+                  className={buttonVariants({
+                    variant: "ghost",
+                    className: "text-white",
+                  })}
+                  href="/category/headphones"
+                >
+                  headphones
                 </Link>
               </li>
               <li>
-                <Link href="/category/speakers">
-                  <Button className="text-white" variant="ghost">
-                    speakers
-                  </Button>
+                <Link
+                  className={buttonVariants({
+                    variant: "ghost",
+                    className: "text-white",
+                  })}
+                  href="/category/speakers"
+                >
+                  speakers
                 </Link>
               </li>
               <li>
-                <Link href="/category/earphones">
-                  <Button className="text-white" variant="ghost">
-                    earphones
-                  </Button>
+                <Link
+                  className={buttonVariants({
+                    variant: "ghost",
+                    className: "text-white",
+                  })}
+                  href="/category/earphones"
+                >
+                  earphones
                 </Link>
               </li>
             </ul>

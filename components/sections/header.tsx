@@ -4,7 +4,7 @@ import CartPopup from "../cart-popup";
 import MobileMenu from "../mobile-menu";
 import Image from "next/image";
 import MaxWidthContainer from "./max-width-container";
-import Button from "../ui/button";
+import Button, { buttonVariants } from "../ui/button";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -78,31 +78,47 @@ const Header = () => {
         </Link>
         <ul className="hidden lg:flex items-center gap-8">
           <li>
-            <Link href="/">
-              <Button className="text-white" variant="ghost">
-                home
-              </Button>
+            <Link
+              className={buttonVariants({
+                variant: "ghost",
+                className: "text-white",
+              })}
+              href="/"
+            >
+              home
             </Link>
           </li>
           <li>
-            <Link href="/category/headphones">
-              <Button className="text-white" variant="ghost">
-                headphones
-              </Button>
+            <Link
+              className={buttonVariants({
+                variant: "ghost",
+                className: "text-white",
+              })}
+              href="/category/headphones"
+            >
+              headphones
             </Link>
           </li>
           <li>
-            <Link href="/category/speakers">
-              <Button className="text-white" variant="ghost">
-                speakers
-              </Button>
+            <Link
+              className={buttonVariants({
+                variant: "ghost",
+                className: "text-white",
+              })}
+              href="/category/speakers"
+            >
+              speakers
             </Link>
           </li>
           <li>
-            <Link href="/category/earphones">
-              <Button className="text-white" variant="ghost">
-                earphones
-              </Button>
+            <Link
+              className={buttonVariants({
+                variant: "ghost",
+                className: "text-white",
+              })}
+              href="/category/earphones"
+            >
+              earphones
             </Link>
           </li>
         </ul>

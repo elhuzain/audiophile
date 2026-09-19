@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import Button from "./ui/button";
+import { buttonVariants } from "./ui/button";
 
 const YouMayAlsoLikeCard = ({
   product,
@@ -39,8 +39,8 @@ const YouMayAlsoLikeCard = ({
         src={product.image.desktop}
       />
       <h3 className="uppercase text-h5 mb-8">{product.name}</h3>
-      <Link href={`/products/${product.slug}`}>
-        <Button>See product</Button>
+      <Link className={buttonVariants()} href={"/products/" + product.slug}>
+        See product
       </Link>
     </article>
   );

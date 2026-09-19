@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Button from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import MaxWidthContainer from "./max-width-container";
 import Link from "next/link";
 
@@ -36,10 +36,13 @@ const FeaturedProducts = ({ className = "" }: { className?: string }) => {
               Upgrade to premium speakers that are phenomenally built to deliver
               truly remarkable sound.
             </p>
-            <Link href="/products/zx9-speaker">
-              <Button className="bg-black hover:bg-black/60">
-                see product
-              </Button>
+            <Link
+              className={buttonVariants({
+                className: "bg-black hover:bg-black/60",
+              })}
+              href="/products/zx9-speaker"
+            >
+              see product
             </Link>
           </div>
         </article>
@@ -47,8 +50,11 @@ const FeaturedProducts = ({ className = "" }: { className?: string }) => {
         <article className="relative flex flex-col overflow-hidden object-contain aspect-square sm:h-80 sm:w-full sm:aspect-auto rounded-lg bg-light px-6 sm:px-16 xl:px-24 py-10">
           <div className="relative z-10 my-auto">
             <h2 className="text-h4 uppercase mb-8">zx7 speaker</h2>
-            <Link href="/products/zx7-speaker">
-              <Button variant="secondary">see product</Button>
+            <Link
+              className={buttonVariants({ variant: "secondary" })}
+              href="/products/zx7-speaker"
+            >
+              see product
             </Link>
           </div>
           <Image
@@ -95,10 +101,14 @@ const FeaturedProducts = ({ className = "" }: { className?: string }) => {
           />
           <div className="bg-light flex justify-center flex-col rounded-lg px-6 py-10 w-full sm:px-10 sm:py-25 xl:px-24">
             <h2 className="text-h4 uppercase mb-8">yx1 earphones</h2>
-            <Link href="/products/yx1-earphones">
-              <Button variant="secondary" className="w-fit">
-                see product
-              </Button>
+            <Link
+              className={buttonVariants({
+                variant: "secondary",
+                className: "w-fit",
+              })}
+              href="/products/yx1-earphones"
+            >
+              see product
             </Link>
           </div>
         </article>

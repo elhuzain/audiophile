@@ -1,5 +1,4 @@
 import { ChevronRight } from "lucide-react";
-import Button from "./ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,15 +12,15 @@ const CategoryCard = ({ title, href }: { title: string; href: string }) => {
         <Image
           className="object-cover"
           fill
-          alt="Headphones"
+          alt={`${title} category`}
           src={`/shared/desktop/image-category-thumbnail-${title}.png`}
         />
       </div>
       <h2 className="text-h6 uppercase mb-2">{title}</h2>
-      <Button variant="ghost">
-        <span className="group-hover:text-primary">shop</span>
-        <ChevronRight className="text-primary" />
-      </Button>
+      <span className="inline-flex items-center gap-1 text-[13px] font-bold tracking-[1px] uppercase text-black/50 group-hover:text-primary">
+        shop
+        <ChevronRight className="size-4 text-primary" />
+      </span>
     </Link>
   );
 };
