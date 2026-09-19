@@ -178,7 +178,7 @@ const ProductReview = ({ product }: { product: DetailedProduct }) => {
                   width="445"
                   height="280"
                   alt={product.name}
-                  src={product.gallery.first.tablet}
+                  src={product.gallery.first.desktop}
                   className="rounded-lg w-full object-cover mb-5 hidden lg:block"
                 />
 
@@ -200,7 +200,7 @@ const ProductReview = ({ product }: { product: DetailedProduct }) => {
                   width="445"
                   height="280"
                   alt={product.name}
-                  src={product.gallery.second.tablet}
+                  src={product.gallery.second.desktop}
                   className="rounded-lg w-full object-cover hidden lg:block"
                 />
               </div>
@@ -222,7 +222,7 @@ const ProductReview = ({ product }: { product: DetailedProduct }) => {
                 width="612"
                 height="592"
                 alt={product.name}
-                src={product.gallery.third.tablet}
+                src={product.gallery.third.desktop}
                 className="rounded-lg object-cover hidden lg:block"
               />
             </div>

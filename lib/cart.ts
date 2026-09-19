@@ -13,6 +13,7 @@ export type CartItem = {
 const EMPTY_CART: CartItem[] = [];
 let cachedStorageValue: string | null | undefined;
 let cachedCart = EMPTY_CART;
+let useMemoryFallback = false;
 
 const isCartItem = (value: unknown): value is CartItem => {
   if (!value || typeof value !== "object") return false;
@@ -33,6 +34,7 @@ const isCartItem = (value: unknown): value is CartItem => {
 
 export const getCart = (): CartItem[] => {
   if (typeof window === "undefined") return EMPTY_CART;
+  if (useMemoryFallback) return cachedCart;
 
   try {
     const storedCart = window.localStorage.getItem(CART_STORAGE_KEY);
@@ -53,7 +55,8 @@ export const getCart = (): CartItem[] => {
 
     return cachedCart;
   } catch {
-    return EMPTY_CART;
+    useMemoryFallback = true;
+    return cachedCart;
   }
 };
 
@@ -62,18 +65,34 @@ export const getServerCart = (): CartItem[] => EMPTY_CART;
 export const setCart = (cart: CartItem[]): void => {
   if (typeof window === "undefined") return;
 
-  const serializedCart = JSON.stringify(cart);
-  window.localStorage.setItem(CART_STORAGE_KEY, serializedCart);
-  cachedStorageValue = serializedCart;
   cachedCart = cart;
-  window.dispatchEvent(new Event(CART_CHANGE_EVENT));
+
+  try {
+    const serializedCart = JSON.stringify(cart);
+    window.localStorage.setItem(CART_STORAGE_KEY, serializedCart);
+    cachedStorageValue = serializedCart;
+    useMemoryFallback = false;
+  } catch {
+    cachedStorageValue = undefined;
+    useMemoryFallback = true;
+  }
+
+  try {
+    window.dispatchEvent(new Event(CART_CHANGE_EVENT));
+  } catch {
+    // The in-memory cart remains available when custom events are restricted.
+  }
 };
 
 export const subscribeToCart = (listener: () => void): (() => void) => {
   if (typeof window === "undefined") return () => undefined;
 
   const handleStorage = (event: StorageEvent) => {
-    if (event.key === CART_STORAGE_KEY) listener();
+    if (event.key === CART_STORAGE_KEY || event.key === null) {
+      cachedStorageValue = undefined;
+      useMemoryFallback = false;
+      listener();
+    }
   };
 
   window.addEventListener(CART_CHANGE_EVENT, listener);
