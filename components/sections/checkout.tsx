@@ -1,10 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useSyncExternalStore } from "react";
+import OrderConfirmation from "../order-confirmation";
 import OrderSummary from "../order-summary";
 import Input from "../ui/input";
-import { getCart, getServerCart, subscribeToCart } from "@/lib/cart";
+import {
+  type CartItem,
+  getCart,
+  getServerCart,
+  setCart,
+  subscribeToCart,
+} from "@/lib/cart";
 import { cn } from "@/lib/utils";
 import MaxWidthContainer from "./max-width-container";
 
@@ -67,8 +75,24 @@ const SectionHeading = ({ children }: { children: React.ReactNode }) => (
 );
 
 const Checkout = () => {
+  const router = useRouter();
   const cart = useSyncExternalStore(subscribeToCart, getCart, getServerCart);
   const [paymentMethod, setPaymentMethod] = useState("e-money");
+  const [confirmedOrder, setConfirmedOrder] = useState<CartItem[] | null>(null);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (cart.length > 0) {
+      setConfirmedOrder(cart.map((item) => ({ ...item })));
+    }
+  };
+
+  const handleBackHome = () => {
+    setCart([]);
+    setConfirmedOrder(null);
+    router.push("/");
+  };
 
   return (
     <main className="flex-1 bg-light pb-24 pt-24 sm:pb-28 sm:pt-32 lg:pb-36 lg:pt-38">
@@ -84,7 +108,7 @@ const Checkout = () => {
 
         <form
           className="grid items-start gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(20rem,1fr)]"
-          onSubmit={(event) => event.preventDefault()}
+          onSubmit={handleSubmit}
         >
           <div className="rounded-lg bg-white p-6 sm:p-8 lg:p-12">
             <h1 className="mb-8 text-h4 uppercase sm:mb-10 sm:text-h3">
@@ -175,6 +199,10 @@ const Checkout = () => {
           <OrderSummary cart={cart} />
         </form>
       </MaxWidthContainer>
+
+      {confirmedOrder && (
+        <OrderConfirmation onBackHome={handleBackHome} order={confirmedOrder} />
+      )}
     </main>
   );
 };

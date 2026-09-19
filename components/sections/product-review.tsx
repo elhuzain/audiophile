@@ -6,6 +6,7 @@ import { getCart, setCart } from "@/lib/cart";
 import { DetailedProduct } from "@/lib/data";
 import Button from "../ui/button";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const ProductReview = ({ product }: { product: DetailedProduct }) => {
   const [quantity, setQuantity] = useState(1);
@@ -44,6 +45,9 @@ const ProductReview = ({ product }: { product: DetailedProduct }) => {
       ]);
     }
 
+    toast.success(quantity + " × " + product.name + " added to cart", {
+      id: "cart-" + product.id,
+    });
     setQuantity(1);
   };
 

@@ -64,7 +64,7 @@ const CartPopup = ({ onClose }: CartPopupProps) => {
       <div
         aria-labelledby="cart-title"
         aria-modal="true"
-        className="me-25"
+        className="max-w-270 mx-auto"
         role="dialog"
       >
         <div className="ms-auto max-h-[calc(100dvh-7rem)] w-full max-w-94 overflow-y-auto rounded-lg bg-white p-6 text-black sm:p-8">

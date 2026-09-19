@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/sections/footer";
 import FooterAbout from "@/components/sections/footer-about";
 import Header from "@/components/sections/header";
+import Toaster from "@/components/ui/toaster";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${manrope.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <Header />
+        <Toaster />
         {children}
         <FooterAbout />
         <Footer />
