@@ -39,7 +39,7 @@ Users should be able to:
 
 ### Screenshot
 
-![](./image.png)
+![](./public/readme-preview.png)
 
 ### Links
 
