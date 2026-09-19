@@ -36,7 +36,7 @@ const FooterAbout = () => {
           height="588"
         />
         <div className="text-center flex flex-col items-center justify-center xl:items-start xl:text-start">
-          <h2 className="text-h5 sm:text-h3 uppercase mb-8 xl:mb-6 max-w-61 sm:max-w-90 tracking-[1.43px] xl:max-w-78 text-center">
+          <h2 className="text-h5 sm:text-h3 xl:text-start uppercase mb-8 xl:mb-6 max-w-61 sm:max-w-90 tracking-[1.43px] xl:max-w-78 text-center">
             Bringing you the <span className="text-primary">best</span> audio
             gear
           </h2>
