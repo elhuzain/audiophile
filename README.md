@@ -54,7 +54,17 @@ Users should be able to:
 
 ### What I learned
 
-The two major strengths I gained from this project are more proper AI assistance usage and component hierarichy. I explored proper usage of the AGENTS.md as well as skills to enhance the output. I also discovered a new way of structuring components in a section, primitive, and reusable manner. `section` is where grouped components that form a section are. `reusable` is individual components that make up a section. Finally, `primitive` is the smallest unit of UI. 
+This project improved both how I structure components and how I approach the less visible parts of an e-commerce flow. I explored using `AGENTS.md` and skills to guide AI assistance, and organized the UI in layers: `section` components assemble page regions, `reusable` components are shared pieces of UI, and `primitive` components are the smallest building blocks.
+
+The cart was a useful lesson in keeping state consistent across separate parts of an app. The header, cart dialog, and checkout need to reflect the same changes, so I put cart reads and writes behind a small shared store and notify subscribers after updates. I also learned that browser storage needs defensive handling: persisted JSON can be malformed, and `localStorage` can be unavailable, so stored entries are checked and the cart falls back to in-memory state when needed. Supporting both same-tab updates and browser storage events also makes changes visible across tabs.
+
+Checkout validation took more care than simply marking fields as required. I used native form constraints for required values, email types, lengths, and formats, then connected field-specific error messages to inputs with `aria-invalid` and `aria-describedby`. Payment choice adds another state-dependent case: e-Money details should only be required when that payment method is selected. This made the browser's validation behavior and the visible, accessible feedback part of the same workflow.
+
+I learned to treat totals as a rule, not just a display. The product subtotal is based on each price and quantity; shipping is $50 for a non-empty cart; and the displayed VAT is 20% of the product subtotal, excluding shipping. Keeping these rules clear matters because the checkout summary and confirmation both show totals. One challenge is that some of this calculation is currently repeated, which makes future pricing changes easier to get out of sync.
+
+Responsive layout work was mostly about changing the relationship between content, not just shrinking it. Checkout moves from a single-column flow to a form-and-summary grid at larger sizes, where the summary can stay visible, while product rows and dialogs need to remain usable on narrow screens. The main challenge was preserving a clear reading order and keeping controls and long product names from crowding one another.
+
+Next, I would move subtotal, VAT, shipping, and grand-total calculations into one shared helper used by the summary and confirmation. I would also add a few end-to-end checks at mobile and desktop widths, especially for checkout validation and the order confirmation, so layout and behavior are verified together as the project grows.
 
 ### AI Collaboration
 
