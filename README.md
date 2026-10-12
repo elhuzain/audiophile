@@ -34,7 +34,7 @@ Users should be able to:
 
 ### Screenshot
 
-![](./public/readme-preview.png)
+![](./solution.png)
 
 ### Links
 
